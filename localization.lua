@@ -23,7 +23,7 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.9.8.3";
+DCR_VERSION_STRING = "Decursive 1.9.8.4";
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -167,6 +167,8 @@ DCR_REVERSE_LIVELIST= "Reverse live-list display";
 DCR_TIE_LIVELIST    = "Tie live-list visibility to DCR window";
 DCR_HIDE_LIVELIST   = "Hide the live-list";
 
+DCR_MUTAT_INJ       = "Cure Mutating Injection";
+
 DCR_AMOUNT_AFFLIC   = "The amount of afflicted to show : ";
 DCR_BLACK_LENGTH    = "Seconds on the blacklist : ";
 DCR_SCAN_LENGTH     = "Seconds between live scans : ";
@@ -212,6 +214,7 @@ DCR_SKIP_LIST = {
     ["Greater Dreamless Sleep"] = true,
     ["Mind Vision"] = true,
     ["Mutating Injection"] = true,
+	["Magma Shackles"]     = true,
 };
 
 -- ignore the effect bassed on the class
@@ -226,12 +229,6 @@ DCR_SKIP_BY_CLASS_LIST = {
 	["Ancient Hysteria"]   = true,
 	["Ignite Mana"]        = true,
 	["Tainted Mind"]       = true,
-    };
-    [DCR_CLASS_HUNTER] = {
-	["Magma Shackles"]     = true,
-    };
-    [DCR_CLASS_MAGE] = {
-	["Magma Shackles"]     = true,
     };
 };
 

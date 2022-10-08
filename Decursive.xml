@@ -1101,7 +1101,7 @@
 
     <Frame name="DecursivePopulateListFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="168" y="245" />
+	    <AbsDimension x="168" y="265" />
 	</Size>
 
 	<Anchors>
@@ -1121,19 +1121,6 @@
 		<AbsInset left="5" right="5" top="5" bottom="5"/>
 	    </BackgroundInsets>
 	</Backdrop>
-
-	<Scripts>
-	    <OnShow>
-		local _, faction = UnitFactionGroup("player");
-		if (faction == DCR_ALLIANCE_NAME) then
-		DecursivePopulateListFrameOther:SetText(DCR_LOC_CLASS_PALADIN);
-		DecursivePopulateListFrameOther.ClassType = DCR_CLASS_PALADIN;
-		else
-		DecursivePopulateListFrameOther:SetText(DCR_LOC_CLASS_SHAMAN);
-		DecursivePopulateListFrameOther.ClassType = DCR_CLASS_SHAMAN;
-		end
-	    </OnShow>
-	</Scripts>
 	<Layers>
 	    <Layer level="BACKGROUND">
 		<FontString name="$parentTitle" inherits="GameFontNormal" text="DCR_STR_QUICK_POP">
@@ -1488,7 +1475,7 @@
 		</Scripts>
 	    </Button>
 
-	    <Button name="$parentOther" inherits="GameMenuButtonTemplate" text="Other">
+	    <Button name="$parentShaman" inherits="GameMenuButtonTemplate" text="Shaman">
 		<Size>
 		    <AbsDimension x="80" y="20" />
 		</Size>
@@ -1501,11 +1488,33 @@
 		</Anchors>
 		<Scripts>
 		    <OnClick>
-			--this.ClassType = "OTHER";
+			this.ClassType = DCR_CLASS_SHAMAN;
 			Dcr_PopulateButtonPress();
 		    </OnClick>
 		    <OnLoad>
-			this:SetText(DCR_STR_OTHER);
+			this:SetText(DCR_LOC_CLASS_SHAMAN);
+		    </OnLoad>
+		</Scripts>
+	    </Button>
+		
+		<Button name="$parentPaladin" inherits="GameMenuButtonTemplate" text="Paladin">
+		<Size>
+		    <AbsDimension x="80" y="20" />
+		</Size>
+		<Anchors>
+		    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parentDruid">
+			<Offset>
+			    <AbsDimension x="0" y="0" />
+			</Offset>
+		    </Anchor>
+		</Anchors>
+		<Scripts>
+		    <OnClick>
+			this.ClassType = DCR_CLASS_PALADIN;
+			Dcr_PopulateButtonPress();
+		    </OnClick>
+		    <OnLoad>
+			this:SetText(DCR_LOC_CLASS_PALADIN);
 		    </OnLoad>
 		</Scripts>
 	    </Button>
@@ -1537,7 +1546,7 @@
     <!-- The options frame -->
     <Frame name="DcrOptionsFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="270" y="520" />
+	    <AbsDimension x="270" y="540" />
 	</Size>
 
 	<Anchors>
@@ -2038,6 +2047,38 @@
 		    </OnShow>
 		</Scripts>
 	    </CheckButton>
+		<CheckButton name="$parentCureMutatingInjection" inherits="OptionsCheckButtonTemplate">
+		<Anchors>
+		    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parentTieLL">
+			<Offset>
+			    <AbsDimension x="0" y="-25" />
+			</Offset>
+		    </Anchor>
+		</Anchors>
+		<Scripts>
+		    <OnClick>
+			Dcr_Saved.CureMutatingInjection = (this:GetChecked() == 1);
+			DCR_SKIP_LIST["Mutating Injection"] = (this:GetChecked() ~= 1)
+		    </OnClick>
+		    <OnLoad>
+			Dcr_ThisSetText(DCR_MUTAT_INJ);
+		    </OnLoad>
+		    <OnShow>
+			if (Dcr_Saved.CureMutatingInjection) then
+			this:SetChecked(1);
+			DCR_SKIP_LIST["Mutating Injection"] = false
+			else
+			this:SetChecked(0);
+			end
+			if (DCR_CAN_CURE_DISEASE) then
+			this:Enable();
+			else
+			this:SetChecked(0);
+			this:Disable();
+			end
+		    </OnShow>
+		</Scripts>
+	    </CheckButton>
 	</Frames>
     </Frame>
     <Frame name="DcrOptionsFrame2" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" parent="DcrOptionsFrame">
@@ -2220,7 +2261,7 @@
 		    </OnShow>
 		</Scripts>
 	    </CheckButton>
-
+		
 	    <Button name="$parentSave" inherits="GameMenuButtonTemplate" text="CLOSE">
 		<Anchors>
 		    <Anchor point="CENTER" relativePoint="BOTTOM" relativeTo="$parent">

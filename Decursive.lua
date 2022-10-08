@@ -1633,6 +1633,14 @@ function Dcr_OnLoad (Frame) --{{{
    Frame:RegisterEvent("PLAYER_LOGIN");
 end --}}}
 
+local frame=CreateFrame("Frame");
+frame:RegisterEvent("VARIABLES_LOADED");
+frame:SetScript("OnEvent",function(self,event,...)
+   if (Dcr_Saved.CureMutatingInjection) then
+      DCR_SKIP_LIST["Mutating Injection"] = false
+   end
+end);
+
 function Dcr_OnEvent (event) --{{{
     local Frame = this;
 
@@ -2803,6 +2811,7 @@ function Dcr_Cast_CureSpell( spellID, Unit, AfflictionType, ClearCurrentTarget) 
     -- cast the spell
     Dcr_Casting_Spell_On = Unit;
     CastSpell(spellID[1],  spellID[2]);
+	SendAddonMessage("decursive", "decursing", "RAID")
 
     -- if the spell doesn't need a target
     if (Dcr_RestoreTarget and (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE)) then
