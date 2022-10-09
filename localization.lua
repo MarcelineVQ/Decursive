@@ -213,8 +213,9 @@ DCR_SKIP_LIST = {
     ["Dreamless Sleep"] = true,
     ["Greater Dreamless Sleep"] = true,
     ["Mind Vision"] = true,
-    ["Mutating Injection"] = true,
-	["Magma Shackles"]     = true,
+    ["Mutating Injection"]  = true,
+	["Magma Shackles"]      = true,
+	["Delusions of Jin'do"] = true,
 };
 
 -- ignore the effect bassed on the class
