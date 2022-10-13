@@ -216,6 +216,8 @@ DCR_SKIP_LIST = {
     ["Mutating Injection"]  = true,
 	["Magma Shackles"]      = true,
 	["Delusions of Jin'do"] = true,
+	["Songflower Serenade"] = true,
+	["Curse of Recklessness"] = true,
 };
 
 -- ignore the effect bassed on the class
