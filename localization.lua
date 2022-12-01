@@ -218,6 +218,10 @@ DCR_SKIP_LIST = {
 	["Delusions of Jin'do"] = true,
 	["Songflower Serenade"] = true,
 	["Curse of Recklessness"] = true,
+	["Mol'dar's Moxie"] = true,
+	["Fengus' Ferocity"] = true,
+	["Slip'kik's Savvy"] = true,
+	["Songflower Serenade"] = true,
 };
 
 -- ignore the effect bassed on the class
