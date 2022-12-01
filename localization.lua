@@ -222,6 +222,7 @@ DCR_SKIP_LIST = {
 	["Fengus' Ferocity"] = true,
 	["Slip'kik's Savvy"] = true,
 	["Songflower Serenade"] = true,
+	["Wyvern Sting"] = true,
 };
 
 -- ignore the effect bassed on the class
