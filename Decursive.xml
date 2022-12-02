@@ -1546,7 +1546,7 @@
     <!-- The options frame -->
     <Frame name="DcrOptionsFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="270" y="540" />
+	    <AbsDimension x="270" y="560" />
 	</Size>
 
 	<Anchors>
@@ -2048,36 +2048,68 @@
 		</Scripts>
 	    </CheckButton>
 		<CheckButton name="$parentCureMutatingInjection" inherits="OptionsCheckButtonTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parentTieLL">
+				<Offset>
+					<AbsDimension x="0" y="-25" />
+				</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Dcr_Saved.CureMutatingInjection = (this:GetChecked() == 1);
+					DCR_SKIP_LIST["Mutating Injection"] = (this:GetChecked() ~= 1)
+				</OnClick>
+					<OnLoad>
+						Dcr_ThisSetText(DCR_MUTAT_INJ);
+					</OnLoad>
+				<OnShow>
+					if (Dcr_Saved.CureMutatingInjection) then
+						this:SetChecked(1);
+						DCR_SKIP_LIST["Mutating Injection"] = false
+					else
+						this:SetChecked(0);
+					end
+					if (DCR_CAN_CURE_DISEASE) then
+						this:Enable();
+					else
+						this:SetChecked(0);
+						this:Disable();
+					end
+				</OnShow>
+			</Scripts>
+	    </CheckButton>
+		<CheckButton name="$parentCureWyvernSting" inherits="OptionsCheckButtonTemplate">
 		<Anchors>
-		    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parentTieLL">
-			<Offset>
-			    <AbsDimension x="0" y="-25" />
-			</Offset>
+		    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parentCureMutatingInjection">
+				<Offset>
+					<AbsDimension x="0" y="-25" />
+				</Offset>
 		    </Anchor>
 		</Anchors>
-		<Scripts>
-		    <OnClick>
-			Dcr_Saved.CureMutatingInjection = (this:GetChecked() == 1);
-			DCR_SKIP_LIST["Mutating Injection"] = (this:GetChecked() ~= 1)
-		    </OnClick>
-		    <OnLoad>
-			Dcr_ThisSetText(DCR_MUTAT_INJ);
-		    </OnLoad>
-		    <OnShow>
-			if (Dcr_Saved.CureMutatingInjection) then
-			this:SetChecked(1);
-			DCR_SKIP_LIST["Mutating Injection"] = false
-			else
-			this:SetChecked(0);
-			end
-			if (DCR_CAN_CURE_DISEASE) then
-			this:Enable();
-			else
-			this:SetChecked(0);
-			this:Disable();
-			end
-		    </OnShow>
-		</Scripts>
+			<Scripts>
+				<OnClick>
+					Dcr_Saved.CureWyvernSting = (this:GetChecked() == 1);
+					DCR_SKIP_LIST["Wyvern Sting"] = (this:GetChecked() ~= 1)
+				</OnClick>
+				<OnLoad>
+					Dcr_ThisSetText(DCR_WYV_STING);
+				</OnLoad>
+				<OnShow>
+					if (Dcr_Saved.CureWyvernSting) then
+						this:SetChecked(1);
+						DCR_SKIP_LIST["Wyvern Sting"] = false
+					else
+						this:SetChecked(0);
+					end
+					if (DCR_CAN_CURE_POISON) then
+						this:Enable();
+					else
+						this:SetChecked(0);
+						this:Disable();
+					end
+				</OnShow>
+			</Scripts>
 	    </CheckButton>
 	</Frames>
     </Frame>

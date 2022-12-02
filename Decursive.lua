@@ -1639,6 +1639,9 @@ frame:SetScript("OnEvent",function(self,event,...)
    if (Dcr_Saved.CureMutatingInjection) then
       DCR_SKIP_LIST["Mutating Injection"] = false
    end
+   if (Dcr_Saved.CureWyvernSting) then
+      DCR_SKIP_LIST["Wyvern Sting"] = false
+   end
 end);
 
 function Dcr_OnEvent (event) --{{{

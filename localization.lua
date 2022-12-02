@@ -23,7 +23,7 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.9.8.4";
+DCR_VERSION_STRING = "Decursive 1.9.8.5";
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -168,6 +168,7 @@ DCR_TIE_LIVELIST    = "Tie live-list visibility to DCR window";
 DCR_HIDE_LIVELIST   = "Hide the live-list";
 
 DCR_MUTAT_INJ       = "Cure Mutating Injection";
+DCR_WYV_STING		= "Abolish Wyvern Sting";
 
 DCR_AMOUNT_AFFLIC   = "The amount of afflicted to show : ";
 DCR_BLACK_LENGTH    = "Seconds on the blacklist : ";
