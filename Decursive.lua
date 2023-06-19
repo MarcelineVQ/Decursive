@@ -2365,6 +2365,7 @@ function Dcr_Clean(UseThisTarget, SwitchToTarget) --{{{
 
     if (not cleaned) then
 	Dcr_println( DCR_NOT_CLEANED);
+	SendAddonMessage("decursive", "decursing", "RAID")
     end
 
     Dcr_AlreadyCleanning = false;
