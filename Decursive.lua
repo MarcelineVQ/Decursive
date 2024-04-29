@@ -2753,86 +2753,105 @@ function Dcr_Cure_Disease(counts, Unit) --{{{
 end --}}}
 
 function Dcr_Cast_CureSpell( spellID, Unit, AfflictionType, ClearCurrentTarget) --{{{
-    local name = (UnitName(Unit));
+	-- has superwow?
+	if SetAutoloot then
+		local name = UnitName(Unit);
+		Dcr_debug_bis( "try to cast: "..spellID[1] .." - ".. spellID[2]);
+		local spellName = GetSpellName(spellID[1], spellID[2]);
+		Dcr_debug( "casting - "..spellName);
+		local _,guid = UnitExists(Unit)
+		if Dcr_UnitInRange(Unit) then
+			Dcr_println( string.gsub( string.gsub(DCR_CLEAN_STRING, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
+			Dcr_debug_bis( "casting on " .. UnitName(Unit) .. " -- " .. Unit);
+			Dcr_Casting_Spell_On = Unit;
+			CastSpellByName(spellName,guid)
+			SendAddonMessage("decursive", "decursing", "RAID")
+			return true
+		else
+			Dcr_errln( string.gsub( string.gsub(DCR_OUT_OF_RANGE, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
+		  return false
+	  end
+	else
+		local name = (UnitName(Unit));
 
+			if (spellID[1] == 0) then
+		Dcr_errln("Stupid call to Dcr_Cast_CureSpell() with a null spellID!!!");
+		return false;
+			end
 
-    if (spellID[1] == 0) then
-	Dcr_errln("Stupid call to Dcr_Cast_CureSpell() with a null spellID!!!");
-	return false;
-    end
+			-- check to see if we are in range
+			if (
+		(spellID[2] ~= BOOKTYPE_PET) and
+		(not Dcr_UnitInRange(Unit))
+		) then
 
-    -- check to see if we are in range
-    if (
-	(spellID[2] ~= BOOKTYPE_PET) and
-	(not Dcr_UnitInRange(Unit))
-	) then
+		-- XXX We do not blacklist out of range people any more, they don't prevent anything from hapenning
+		-- it will just spam a bit if there are a lot of them...
 
-	-- XXX We do not blacklist out of range people any more, they don't prevent anything from hapenning
-	-- it will just spam a bit if there are a lot of them...
+		-- Dcr_Blacklist_Array[Unit] = nil; -- attempt to remove it
+		-- Dcr_Blacklist_Array[Unit] = Dcr_Saved.CureBlacklist; -- add it to the blacklist, hopefully at the end
 
-	-- Dcr_Blacklist_Array[Unit] = nil; -- attempt to remove it
-	-- Dcr_Blacklist_Array[Unit] = Dcr_Saved.CureBlacklist; -- add it to the blacklist, hopefully at the end
+		-- DCR_ThisCleanBlaclisted[Unit] = true;
 
-	-- DCR_ThisCleanBlaclisted[Unit] = true;
+		Dcr_errln( string.gsub( string.gsub(DCR_OUT_OF_RANGE, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
+		-- DCR_ThisNumberOoRUnits = DCR_ThisNumberOoRUnits + 1;
+		return false;
+			end
 
-	Dcr_errln( string.gsub( string.gsub(DCR_OUT_OF_RANGE, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
-	-- DCR_ThisNumberOoRUnits = DCR_ThisNumberOoRUnits + 1;
-	return false;
-    end
+			Dcr_debug_bis( "try to cast: "..spellID[1] .." - ".. spellID[2]);
+			local spellName = GetSpellName(spellID[1], spellID[2]);
+			Dcr_debug( "casting - "..spellName);
 
-    Dcr_debug_bis( "try to cast: "..spellID[1] .." - ".. spellID[2]);
-    local spellName = GetSpellName(spellID[1], spellID[2]);
-    Dcr_debug( "casting - "..spellName);
+			-- clear the target if it will interfear
+			if (ClearCurrentTarget) then
+		-- it can target enemys... do don't target ANYTHING else
+		if ( not UnitIsUnit( "target", Unit) ) then
+				ClearTarget();
+		end
+			elseif ( UnitIsFriend( "player", "target") ) then
+		-- we can accedenally cure friendly targets...
+		if ( not UnitIsUnit( "target", Unit) ) then
+				-- and we want to cure someone else who is not targeted
+				ClearTarget();
+		end
+			end
 
-    -- clear the target if it will interfear
-    if (ClearCurrentTarget) then
-	-- it can target enemys... do don't target ANYTHING else
-	if ( not UnitIsUnit( "target", Unit) ) then
-	    ClearTarget();
+			Dcr_println( string.gsub( string.gsub(DCR_CLEAN_STRING, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
+			Dcr_debug_bis( "casting on " .. (UnitName(Unit)) .. " -- " .. Unit);
+			if (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE) then
+		TargetUnit(Unit);
+			end
+
+			-- if a spell is awaiting for a target, cancel it
+			-- if ( SpellIsTargeting()) then
+			--	SpellStopTargeting();
+			-- always cancel current spell
+			--	SpellStopCasting();
+
+			-- end
+
+			-- cast the spell
+			Dcr_Casting_Spell_On = Unit;
+			CastSpell(spellID[1],  spellID[2]);
+		SendAddonMessage("decursive", "decursing", "RAID")
+
+			-- if the spell doesn't need a target
+			if (Dcr_RestoreTarget and (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE)) then
+		TargetUnit("playertarget"); -- restore previous target 
+			else
+		-- if the cast succeeded
+		if (SpellIsTargeting()) then
+				SpellTargetUnit(Unit);
+		end
+			end
+
+			-- if the targeting failed (still waiting for a target), cancel the cast
+			if ( SpellIsTargeting()) then
+		SpellStopTargeting();
+			end
+
+			return true;
 	end
-    elseif ( UnitIsFriend( "player", "target") ) then
-	-- we can accedenally cure friendly targets...
-	if ( not UnitIsUnit( "target", Unit) ) then
-	    -- and we want to cure someone else who is not targeted
-	    ClearTarget();
-	end
-    end
-
-    Dcr_println( string.gsub( string.gsub(DCR_CLEAN_STRING, "$t", MakePlayerName(name)), "$a", MakeAfflictionName(AfflictionType)));
-    Dcr_debug_bis( "casting on " .. (UnitName(Unit)) .. " -- " .. Unit);
-    if (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE) then
-	TargetUnit(Unit);
-    end
-
-    -- if a spell is awaiting for a target, cancel it
-    -- if ( SpellIsTargeting()) then
-    --	SpellStopTargeting();
-    -- always cancel current spell
-    --	SpellStopCasting();
-
-    -- end
-
-    -- cast the spell
-    Dcr_Casting_Spell_On = Unit;
-    CastSpell(spellID[1],  spellID[2]);
-	SendAddonMessage("decursive", "decursing", "RAID")
-
-    -- if the spell doesn't need a target
-    if (Dcr_RestoreTarget and (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE)) then
-	TargetUnit("playertarget"); -- restore previous target 
-    else
-	-- if the cast succeeded
-	if (SpellIsTargeting()) then
-	    SpellTargetUnit(Unit);
-	end
-    end
-
-    -- if the targeting failed (still waiting for a target), cancel the cast
-    if ( SpellIsTargeting()) then
-	SpellStopTargeting();
-    end
-
-    return true;
 end --}}}
 -- }}}
 -------------------------------------------------------------------------------
