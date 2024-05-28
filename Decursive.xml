@@ -1101,7 +1101,7 @@
 
     <Frame name="DecursivePopulateListFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="168" y="245" />
+	    <AbsDimension x="168" y="265" />
 	</Size>
 
 	<Anchors>
@@ -1559,7 +1559,7 @@
     <!-- The options frame -->
     <Frame name="DcrOptionsFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="270" y="520" />
+	    <AbsDimension x="270" y="560" />
 	</Size>
 
 	<Anchors>
