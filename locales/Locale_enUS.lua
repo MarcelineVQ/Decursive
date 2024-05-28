@@ -23,7 +23,7 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.9.8.5";
+DCR_VERSION_STRING = "Decursive 1.9.9";
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -155,8 +155,8 @@ DCR_SKIP_OPT_STR   = "Decursive Options Menu";
 DCR_POPULATE_LIST  = "Quickly populate the Decursive list";
 DCR_RREMOVE_ID     = "Remove this player";
 DCR_HIDE_MAIN      = "Hide Decursive Window";
-DCR_SHOW_MSG	   = "To show Decursive's frame, type /dcrshow";
-DCR_IS_HERE_MSG	   = "Decursive is now initialized, remember to check the options";
+DCR_SHOW_MSG	   = " /dcrshow";
+DCR_IS_HERE_MSG	   = "Decursive ";
 
 DCR_PRINT_CHATFRAME = "Print messages in default chat";
 DCR_PRINT_CUSTOM    = "Print messages in the window";
