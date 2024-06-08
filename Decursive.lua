@@ -57,13 +57,13 @@ Dcr_Saved = {
     -- this is the people to skip
     SkipList = { };
 
-    -- this is wether or not to show the "live" list	
+    -- this is wether or not to show the "live" list
     Hide_LiveList = false;
 
     -- This will turn on and off the sending of messages to the default chat frame
     Print_ChatFrame = false;
 
-    -- this will send the messages to a custom frame that is moveable	
+    -- this will send the messages to a custom frame that is moveable
     Print_CustomFrame = true;
 
     -- this will disable error messages
@@ -126,7 +126,7 @@ Dcr_Saved = {
 
     -- if true then the live list will show only if the main window is shown
     LiveListTied = false;
-    
+
     -- allow to changes the default output window
     Dcr_OutputWindow = DEFAULT_CHAT_FRAME;
 
@@ -593,12 +593,12 @@ function VerifyOrderList ()
 	end
     end
 
-    if (Dcr_Saved.CureMagic	and	not Dcr_tcheckforval(TempTable,   DCR_MAGIC	)) then 
+    if (Dcr_Saved.CureMagic	and	not Dcr_tcheckforval(TempTable,   DCR_MAGIC	)) then
 	table.insert(TempTable, DCR_MAGIC);
 	Dcr_debug_bis("Adding " .. DCR_MAGIC);
     end
 
-    if (Dcr_Saved.CureCurse	and	not Dcr_tcheckforval(TempTable,   DCR_CURSE	)) then 
+    if (Dcr_Saved.CureCurse	and	not Dcr_tcheckforval(TempTable,   DCR_CURSE	)) then
 	table.insert(TempTable, DCR_CURSE);
 	Dcr_debug_bis("Adding " .. DCR_CURSE);
     end
@@ -608,7 +608,7 @@ function VerifyOrderList ()
 	Dcr_debug_bis("Adding " .. DCR_POISON);
     end
 
-    if (Dcr_Saved.CureDisease   and	not Dcr_tcheckforval(TempTable,   DCR_DISEASE	)) then 
+    if (Dcr_Saved.CureDisease   and	not Dcr_tcheckforval(TempTable,   DCR_DISEASE	)) then
 	table.insert(TempTable, DCR_DISEASE);
 	Dcr_debug_bis("Adding " .. DCR_DISEASE);
     end
@@ -982,7 +982,7 @@ function Dcr_AfflictedListFrame_OnUpdate(elapsed) --{{{
 	    item:Hide();
 	end
 
-	-- for testing only		
+	-- for testing only
 	-- Dcr_UpdateLiveDisplay( 1, "player", 1)
 
     end
@@ -1006,6 +1006,15 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 	    -- Dcr_debug( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
 	    break;
 	end
+
+	  -- Ignore mind control on npcs
+  if (debuff_name == "Mind Control") then
+    -- if unit not in raid or party it's an npc that is being mind controlled intentionally
+    if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
+	     break;
+    end
+  end
+
 
 	if (UnitAffectingCombat("player")) then
 	    if (DCR_SKIP_BY_CLASS_LIST[UClass]) then
@@ -1102,7 +1111,7 @@ function Dcr_UpdateLiveDisplay( Index, Unit, debuff_params) --{{{
     item.debuff = debuff_params.index;
 end --}}}
 
-    
+
 -- }}}
 
 -- // }}}
@@ -1139,7 +1148,7 @@ end --}}}
 
 function Dcr_ClearPriorityList() --{{{
     Dcr_Saved.PriorityList = {};
-    
+
     DecursivePriorityListFrame.UpdateYourself = true;
 end --}}}
 
@@ -1365,7 +1374,7 @@ function Dcr_Init() --{{{
     if (Dcr_Saved.AfflictionTooltips == nil) then
 	Dcr_Saved.AfflictionTooltips = true;
     end
-    
+
 
     if (Dcr_Saved.CureOrderList == nil) then
 	Dcr_Saved.CureOrderList = {
@@ -1394,7 +1403,7 @@ function Dcr_Init() --{{{
     DecursiveTextFrame:SetFading(true);
     DecursiveTextFrame:SetFadeDuration(DCR_TEXT_LIFETIME / 3);
     DecursiveTextFrame:SetTimeVisible(DCR_TEXT_LIFETIME);
-    
+
     -- add support Earth panel
     if(EarthFeature_AddButton) then
 	EarthFeature_AddButton(
@@ -1685,7 +1694,7 @@ function Dcr_OnEvent (event) --{{{
 	Dcr_DelayedReconf = true;
 	return;
     elseif (event == "PARTY_MEMBERS_CHANGED" or event == "PARTY_LEADER_CHANGED") then
-	Dcr_Groups_datas_are_invalid = true; 
+	Dcr_Groups_datas_are_invalid = true;
 	Dcr_debug_bis("Groups changed");
 	return;
     elseif (event == "LEARNED_SPELL_IN_TAB") then
@@ -1713,7 +1722,7 @@ function Dcr_OnEvent (event) --{{{
 	Frame:RegisterEvent("SPELLS_CHANGED");
 	Frame:RegisterEvent("LEARNED_SPELL_IN_TAB");
 	Frame:RegisterEvent("UI_ERROR_MESSAGE");
-	
+
 	Frame:RegisterEvent("PARTY_MEMBERS_CHANGED");
 	Frame:RegisterEvent("PARTY_LEADER_CHANGED");
 
@@ -1728,7 +1737,7 @@ function Dcr_OnEvent (event) --{{{
 	Frame:UnregisterEvent("SPELLS_CHANGED");
 	Frame:UnregisterEvent("LEARNED_SPELL_IN_TAB");
 	Frame:UnregisterEvent("UI_ERROR_MESSAGE");
-	
+
 	Frame:UnregisterEvent("PARTY_MEMBERS_CHANGED");
 	Frame:UnregisterEvent("PARTY_LEADER_CHANGED");
     end
@@ -1969,7 +1978,7 @@ function Dcr_GetUnitArray() --{{{
 		temp_raid_table[i].rGroup   = rGroup;
 		temp_raid_table[i].rIndex   = i; -- I can't trust lua, the manual is not clear at all about table behavior...
 
-		
+
 	    end
 
 	end
@@ -2190,14 +2199,14 @@ function Dcr_Clean(UseThisTarget, SwitchToTarget) --{{{
 
 	if (
 	    ( UnitIsFriend("target", "player") ) -- unit is a friend ie: not FriendLY just a friend that could be MC :/
-	    and 
+	    and
 	    (not UnitIsCharmed("target")) -- and is not mind controlled
 	    ) then
 	    Dcr_debug(" It is friendly");
 	    -- try cleaning the current target first
 	    -- if we are not asked to clean a specific target
 	    -- or if we already switched to the target to clean
-	    if (not UseThisTarget or SwitchToTarget) then 
+	    if (not UseThisTarget or SwitchToTarget) then
 		cleaned = Dcr_CureUnit("target");
 	    end
 
@@ -2212,7 +2221,7 @@ function Dcr_Clean(UseThisTarget, SwitchToTarget) --{{{
 	    if ( UnitIsCharmed("target")) then
 		Dcr_debug( "Unit is enemey... and charmed... so its a mind controlled friendly");
 		-- try cleaning mind controlled person first
-		if (not UseThisTarget or SwitchToTarget) then 
+		if (not UseThisTarget or SwitchToTarget) then
 		    cleaned = Dcr_CureUnit("target");
 		end
 	    end
@@ -2487,7 +2496,7 @@ function Dcr_CheckUnitForBuff(Unit, BuffNameToCheck) --{{{
 	    found_buff_name = Dcr_Buff_Texture_to_name_cache[texture];
 	end
 
-	if (i > 1) then 
+	if (i > 1) then
 	    -- reset cache lifetime
 	    Dcr_Buff_Texture_to_name_cache_life = DEBUFF_CACHE_LIFE;
 	end
@@ -2560,6 +2569,15 @@ function Dcr_CureUnit(Unit)  --{{{
 	    Go_On = false; -- == continue
 	end
 
+  -- Ignore mind control on npcs
+  if (debuff_name == "Mind Control") then
+    -- if unit not in raid or party it's an npc that is being mind controlled intentionally
+    if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
+	      Dcr_errln( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
+        Go_On = false; -- == continue
+    end
+  end
+
 	-- If we are in combat lets see if there is any debuffs we can afford to not remove until ths fight is over
 	if (UnitAffectingCombat("player")) then
 	    if (DCR_SKIP_BY_CLASS_LIST[UClass]) then
@@ -2616,7 +2634,7 @@ function Dcr_CureUnit(Unit)  --{{{
 	end
     end
 
-    -- order these in the way you find most important 
+    -- order these in the way you find most important
     --[[
     if (not res) then
 	res = Dcr_Cure_Magic( counts, Unit);
@@ -2837,7 +2855,7 @@ function Dcr_Cast_CureSpell( spellID, Unit, AfflictionType, ClearCurrentTarget) 
 
 			-- if the spell doesn't need a target
 			if (Dcr_RestoreTarget and (spellID[2] == BOOKTYPE_PET or spellID[3] == DCR_SPELL_PURGE)) then
-		TargetUnit("playertarget"); -- restore previous target 
+		TargetUnit("playertarget"); -- restore previous target
 			else
 		-- if the cast succeeded
 		if (SpellIsTargeting()) then
