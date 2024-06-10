@@ -43,6 +43,8 @@ DCR_REMOTE_DEBUG = { };
 -- variables {{{
 -------------------------------------------------------------------------------
 
+local has_superwow = SetAutoloot and true or false
+
 -------------------------------------------------------------------------------
 -- The stored variables {{{
 -------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ Dcr_Saved = {
     Print_Error = true;
 
     -- check for abolish before curing poison or disease
-    Check_For_Abolish = true;
+    Check_For_Abolish = false;
 
     -- this is "fix" for the fact that rank 1 of dispell magic does not always remove
     -- the high level debuffs properly. This carrys over to other things.
@@ -129,6 +131,8 @@ Dcr_Saved = {
 
     -- allow to changes the default output window
     Dcr_OutputWindow = DEFAULT_CHAT_FRAME;
+
+		CureWyvernSting = true;
 
     -- cure order list
     CureOrderList = {
@@ -2382,18 +2386,21 @@ function Dcr_GetUnitBuff (Unit, i) --{{{
 end --}}}
 
 function Dcr_GetUnitDebuff  (Unit, i) --{{{
-    local DebuffTexture, debuffApplications, debuff_type;
+	local DebuffTexture, debuffApplications, debuff_type;
 
-    DebuffTexture, debuffApplications, debuff_type = UnitDebuff(Unit, i);
+	DebuffTexture, debuffApplications, debuff_type, debuff_id = UnitDebuff(Unit, i);
 
-    if (DebuffTexture) then
+	if (DebuffTexture) then
+		if has_superwow and debuff_id then
+			debuff_name = SpellInfo(debuff_id)
+		else
+			debuff_name = Dcr_GetUnitDebuffName(Unit, i, DebuffTexture);
+		end
 
-	debuff_name = Dcr_GetUnitDebuffName(Unit, i, DebuffTexture);
-
-	return debuff_name, debuff_type, debuffApplications, DebuffTexture;
-    else
-	return false, false, false, false;
-    end
+		return debuff_name, debuff_type, debuffApplications, DebuffTexture;
+	else
+		return false, false, false, false;
+	end
 end --}}}
 
 function Dcr_GetUnitDebuffName  (Unit, i, DebuffTexture) --{{{
@@ -2752,8 +2759,7 @@ function Dcr_Cure_Disease(counts, Unit) --{{{
 end --}}}
 
 function Dcr_Cast_CureSpell( spellID, Unit, AfflictionType, ClearCurrentTarget) --{{{
-	-- has superwow?
-	if SetAutoloot then
+	if has_superwow then
 		local name = UnitName(Unit);
 		Dcr_debug_bis( "try to cast: "..spellID[1] .." - ".. spellID[2]);
 		local spellName = GetSpellName(spellID[1], spellID[2]);
