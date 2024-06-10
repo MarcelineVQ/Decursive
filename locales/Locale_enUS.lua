@@ -205,54 +205,16 @@ DCR_INVISIBLE_LIST = {
 
 -- this causes the target to be ignored!!!!
 DCR_IGNORELIST = {
-    ["Banish"]      = true,
-    ["Phase Shift"] = true,
+	["Banish"]      = true,
+	["Phase Shift"] = true,
 };
 
 -- ignore this effect
 DCR_SKIP_LIST = {
-    ["Dreamless Sleep"] = true,
-    ["Greater Dreamless Sleep"] = true,
-    ["Mind Vision"] = true,
-    ["Mutating Injection"]  = true,
-	["Magma Shackles"]      = true,
-	["Delusions of Jin'do"] = true,
-	["Songflower Serenade"] = true,
-	["Curse of Recklessness"] = true,
-	["Mol'dar's Moxie"] = true,
-	["Fengus' Ferocity"] = true,
-	["Slip'kik's Savvy"] = true,
-	["Songflower Serenade"] = true,
-	["Wyvern Sting"] = true,
-};
-
--- ignore the effect bassed on the class
-DCR_SKIP_BY_CLASS_LIST = {
-    [DCR_CLASS_WARRIOR] = {
-	["Ancient Hysteria"]   = true,
-	["Ignite Mana"]        = true,
-	["Tainted Mind"]       = true,
-    };
-    [DCR_CLASS_ROGUE] = {
-	["Silence"]            = true;
-	["Ancient Hysteria"]   = true,
-	["Ignite Mana"]        = true,
-	["Tainted Mind"]       = true,
-    };
-    [DCR_CLASS_HUNTER] = {
-	["Magma Shackles"]     = true,
-    };
-    [DCR_CLASS_MAGE] = {
-	["Magma Shackles"]     = true,
-    };
-};
-
--- ignore this effect
-DCR_SKIP_LIST = {
-    ["Dreamless Sleep"] = true,
-    ["Greater Dreamless Sleep"] = true,
-    ["Mind Vision"] = true,
-    ["Mutating Injection"]  = true,
+	["Dreamless Sleep"] = true,
+	["Greater Dreamless Sleep"] = true,
+	["Mind Vision"] = true,
+	["Mutating Injection"]  = true,
 	["Magma Shackles"]      = true,
 	["Delusions of Jin'do"] = true,
 	["Songflower Serenade"] = true,
