@@ -1,8 +1,8 @@
 --[[
- Decursive (v 1.9.8.3) add-on for World of Warcraft UI
+ Decursive add-on for World of Warcraft UI
  Copyright (C) 2006 Archarodim ( http://www.2072productions.com/?to=decursive-continued.txt )
- This is the continued work of the original Decursive (v1.9.4) by Quu
- Decursive 1.9.4 is in public domain ( www.quutar.com )
+ This is the continued work of the original Decursive (v1.9.9) by Quu
+ Decursive 1.9.9 is in public domain ( www.quutar.com )
  
  License:
 	This program is free software; you can redistribute it and/or
@@ -1388,8 +1388,7 @@ function Dcr_Init() --{{{
     end
     -- check the spellbook once
     Dcr_Configure();
-    Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_IS_HERE_MSG, 0.3, 0.5, 1);
-    Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_SHOW_MSG, 0.3, 0.5, 1);
+    Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_VERSION_STRING.." "..DCR_SHOW_MSG, 0.3, 0.5, 1);
 
     DecursiveTextFrame:SetFading(true);
     DecursiveTextFrame:SetFadeDuration(DCR_TEXT_LIFETIME / 3);
