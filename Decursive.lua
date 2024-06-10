@@ -1007,15 +1007,6 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 	    break;
 	end
 
-	  -- Ignore mind control on npcs
-  if (debuff_name == DCR_CHARMED) then
-    -- if unit not in raid or party it's an npc that is being mind controlled intentionally
-    if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
-	     break;
-    end
-  end
-
-
 	if (UnitAffectingCombat("player")) then
 	    if (DCR_SKIP_BY_CLASS_LIST[UClass]) then
 		if (DCR_SKIP_BY_CLASS_LIST[UClass][debuff_name]) then
@@ -1031,10 +1022,11 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 	    -- // {{{ --
 	    if (debuff_params.debuff_type == DCR_MAGIC and Dcr_Saved.CureMagic) then
 		if (UnitIsCharmed(Unit)) then
-		    if (DCR_CAN_CURE_ENEMY_MAGIC) then
-			Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
-			return true;
-		    end
+			-- Why would we want to dispell 'magic' from a charmed enemy unit that would likely just dispell the charm?
+			--   if (DCR_CAN_CURE_ENEMY_MAGIC) then
+			-- Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
+			-- return true;
+			--   end
 		else
 		    if (DCR_CAN_CURE_MAGIC) then
 			Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
@@ -2567,15 +2559,6 @@ function Dcr_CureUnit(Unit)  --{{{
 	    Dcr_errln( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
 	    Go_On = false; -- == continue
 	end
-
-  -- Ignore mind control on npcs
-  if (debuff_name == DCR_CHARMED) then
-    -- if unit not in raid or party it's an npc that is being mind controlled intentionally
-    if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
-	      Dcr_errln( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
-        Go_On = false; -- == continue
-    end
-  end
 
 	-- If we are in combat lets see if there is any debuffs we can afford to not remove until ths fight is over
 	if (UnitAffectingCombat("player")) then
