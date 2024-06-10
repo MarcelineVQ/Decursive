@@ -1008,7 +1008,7 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 	end
 
 	  -- Ignore mind control on npcs
-  if (debuff_name == "Mind Control") then
+  if (debuff_name == DCR_CHARMED) then
     -- if unit not in raid or party it's an npc that is being mind controlled intentionally
     if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
 	     break;
@@ -2569,7 +2569,7 @@ function Dcr_CureUnit(Unit)  --{{{
 	end
 
   -- Ignore mind control on npcs
-  if (debuff_name == "Mind Control") then
+  if (debuff_name == DCR_CHARMED) then
     -- if unit not in raid or party it's an npc that is being mind controlled intentionally
     if (not UnitInRaid(Unit) and not UnitInParty(Unit)) then
 	      Dcr_errln( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
