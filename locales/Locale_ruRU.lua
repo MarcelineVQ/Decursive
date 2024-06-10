@@ -185,6 +185,7 @@ DCR_SKIP_LIST = {
 	["Смекалка Слип'кика"] = true,
 	["Серенада песнецвета"] = true,
 	["Укус виверны"] = true,
+	["Неистовство бури"] = true,
 };
 
 -- ignore the effect bassed on the class
