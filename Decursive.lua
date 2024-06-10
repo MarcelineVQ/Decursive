@@ -1019,14 +1019,13 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 	-- }}}
 
 	if (debuff_params.debuff_type and debuff_params.debuff_type ~= "") then -- debuff_type can be an empty string
-	    -- // {{{ --
-	    if (debuff_params.debuff_type == DCR_MAGIC and Dcr_Saved.CureMagic) then
+		-- // {{{ --
+		if (debuff_params.debuff_type == DCR_MAGIC and Dcr_Saved.CureMagic) then
 		if (UnitIsCharmed(Unit)) then
-			-- Why would we want to dispell 'magic' from a charmed enemy unit that would likely just dispell the charm?
-			--   if (DCR_CAN_CURE_ENEMY_MAGIC) then
-			-- Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
-			-- return true;
-			--   end
+			if (DCR_CAN_CURE_ENEMY_MAGIC and UnitIsPlayer(Unit)) then
+				Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
+				return true;
+			end
 		else
 		    if (DCR_CAN_CURE_MAGIC) then
 			Dcr_UpdateLiveDisplay(Index, Unit, debuff_params);
