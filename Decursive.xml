@@ -2,8 +2,8 @@
     <!--
     Decursive (v 1.9.8) add-on for World of Warcraft UI
     Copyright (C) 2006 Archarodim ( http://www.2072productions.com/?to=decursive-continued.txt )
-    This is the continued work of the original Decursive (v1.9.9) by Quu
-    Decursive 1.9.9 is in public domain ( www.quutar.com )
+    This is the continued work of the original Decursive (v1.9.4) by Quu
+    Decursive 1.9.4 is in public domain ( www.quutar.com )
 
     License:
     This program is free software; you can redistribute it and/or
@@ -1121,19 +1121,6 @@
 		<AbsInset left="5" right="5" top="5" bottom="5"/>
 	    </BackgroundInsets>
 	</Backdrop>
-
-	<Scripts>
-	    <OnShow>
-		local _, faction = UnitFactionGroup("player");
-		if (faction == DCR_ALLIANCE_NAME) then
-		DecursivePopulateListFrameOther:SetText(DCR_LOC_CLASS_PALADIN);
-		DecursivePopulateListFrameOther.ClassType = DCR_CLASS_PALADIN;
-		else
-		DecursivePopulateListFrameOther:SetText(DCR_LOC_CLASS_SHAMAN);
-		DecursivePopulateListFrameOther.ClassType = DCR_CLASS_SHAMAN;
-		end
-	    </OnShow>
-	</Scripts>
 	<Layers>
 	    <Layer level="BACKGROUND">
 		<FontString name="$parentTitle" inherits="GameFontNormal" text="DCR_STR_QUICK_POP">
@@ -1488,7 +1475,7 @@
 		</Scripts>
 	    </Button>
 
-	    <Button name="$parentOther" inherits="GameMenuButtonTemplate" text="Other">
+	    <Button name="$parentShaman" inherits="GameMenuButtonTemplate" text="Shaman">
 		<Size>
 		    <AbsDimension x="80" y="20" />
 		</Size>
@@ -1501,7 +1488,7 @@
 		</Anchors>
 		<Scripts>
 		    <OnClick>
-			--this.ClassType = "OTHER";
+			this.ClassType = DCR_CLASS_SHAMAN;
 			Dcr_PopulateButtonPress();
 		    </OnClick>
 		    <OnLoad>
@@ -1738,30 +1725,30 @@
 		</Scripts>
 	    </CheckButton>
 
-	<CheckButton name="$parentCheckForAbolish" inherits="OptionsCheckButtonTemplate">
+	    <CheckButton name="$parentCheckForAbolish" inherits="OptionsCheckButtonTemplate">
 		<Anchors>
-			<Anchor point="TOPLEFT" relativeTo="$parentPrintCustomFrame">
-				<Offset>
-					<AbsDimension x="0" y="-25" />
-				</Offset>
-			</Anchor>
+		    <Anchor point="TOPLEFT" relativeTo="$parentPrintCustomFrame">
+			<Offset>
+			    <AbsDimension x="0" y="-25" />
+			</Offset>
+		    </Anchor>
 		</Anchors>
 		<Scripts>
-			<OnClick>
-				Dcr_Saved.Check_For_Abolish = (this:GetChecked() == 1);
-			</OnClick>
-			<OnLoad>
-				Dcr_ThisSetText(DCR_ABOLISH_CHECK);
-			</OnLoad>
-			<OnShow>
-				if (Dcr_Saved.Check_For_Abolish) then
-					this:SetChecked(1);
-				else
-					this:SetChecked(0);
-				end
-		</OnShow>
+		    <OnClick>
+			Dcr_Saved.Check_For_Abolish = (this:GetChecked() == 1);
+		    </OnClick>
+		    <OnLoad>
+			Dcr_ThisSetText(DCR_ABOLISH_CHECK);
+		    </OnLoad>
+		    <OnShow>
+			if (Dcr_Saved.Check_For_Abolish) then
+			this:SetChecked(1);
+			else
+			this:SetChecked(0);
+			end
+		    </OnShow>
 		</Scripts>
-	</CheckButton>
+	    </CheckButton>
 	    <!--
 	    <CheckButton name="$parentCheckForRange" inherits="OptionsCheckButtonTemplate">
 		<Anchors>
@@ -2306,7 +2293,7 @@
 		    </OnShow>
 		</Scripts>
 	    </CheckButton>
-
+		
 	    <Button name="$parentSave" inherits="GameMenuButtonTemplate" text="CLOSE">
 		<Anchors>
 		    <Anchor point="CENTER" relativePoint="BOTTOM" relativeTo="$parent">
