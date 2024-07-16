@@ -228,6 +228,7 @@ DCR_SKIP_LIST = {
   --["Sanctum Mind Decay"] = true,
   ["Dreamstate"] = true,
   ["Call of Nightmare"] = true,
+  ["Poison Mushroom"] = true,
 };
 
 -- ignore the effect bassed on the class
