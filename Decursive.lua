@@ -132,7 +132,8 @@ Dcr_Saved = {
   -- allow to changes the default output window
   Dcr_OutputWindow = DEFAULT_CHAT_FRAME;
 
-    CureWyvernSting = true;
+  CureWyvernSting = true;
+  RangeCheck = true;
 
   -- cure order list
   CureOrderList = {
@@ -961,6 +962,16 @@ function Dcr_AfflictedListFrame_OnUpdate(elapsed) --{{{
     item:Hide();
   end
 
+  -- update livelist, for range checking
+  if Dcr_Saved.RangeCheck then
+    for i = 1, index do
+      local item = getglobal("DecursiveAfflictedListFrameListItem"..i);
+      if item.debuff and item.unit and item:IsShown() then
+        item:SetAlpha(CheckInteractDistance(item.unit,4) or 0.6)
+      end
+    end
+  end
+
   -- for testing only    
   -- Dcr_UpdateLiveDisplay( 1, "player", 1)
 
@@ -1073,6 +1084,7 @@ function Dcr_UpdateLiveDisplay( Index, Unit, debuff_params) --{{{
   --
   -- item.UpdateMe = true;
   item:Show();
+  item:SetAlpha(1)
 
   item = getglobal(baseFrame..Index.."Debuff");
   item.unit = Unit;
@@ -1081,6 +1093,7 @@ function Dcr_UpdateLiveDisplay( Index, Unit, debuff_params) --{{{
   item = getglobal(baseFrame..Index.."ClickMe");
   item.unit = Unit;
   item.debuff = debuff_params.index;
+
 end --}}}
 
   

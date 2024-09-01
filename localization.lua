@@ -169,6 +169,7 @@ DCR_HIDE_LIVELIST   = "Hide the live-list";
 
 DCR_MUTAT_INJ       = "Cure Mutating Injection";
 DCR_WYV_STING    = "Abolish Wyvern Sting";
+DCR_RANGE_CHECK    = "Fade decurse buttons based on range";
 
 DCR_AMOUNT_AFFLIC   = "The amount of afflicted to show : ";
 DCR_BLACK_LENGTH    = "Seconds on the blacklist : ";

@@ -1546,7 +1546,7 @@
     <!-- The options frame -->
     <Frame name="DcrOptionsFrame" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="true" parent="UIParent">
 	<Size>
-	    <AbsDimension x="270" y="560" />
+	    <AbsDimension x="270" y="585" />
 	</Size>
 
 	<Anchors>
@@ -2107,6 +2107,30 @@
 					else
 						this:SetChecked(0);
 						this:Disable();
+					end
+				</OnShow>
+			</Scripts>
+	    </CheckButton>
+		<CheckButton name="$parentRangeCheck" inherits="OptionsCheckButtonTemplate">
+		<Anchors>
+		    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parentCureWyvernSting">
+				<Offset>
+					<AbsDimension x="0" y="-25" />
+				</Offset>
+		    </Anchor>
+		</Anchors>
+			<Scripts>
+				<OnClick>
+					Dcr_Saved.RangeCheck = (this:GetChecked() == 1);
+				</OnClick>
+				<OnLoad>
+					Dcr_ThisSetText(DCR_RANGE_CHECK);
+				</OnLoad>
+				<OnShow>
+					if (Dcr_Saved.RangeCheck) then
+						this:SetChecked(1);
+					else
+						this:SetChecked(0);
 					end
 				</OnShow>
 			</Scripts>

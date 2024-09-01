@@ -130,6 +130,7 @@ if ( GetLocale() == "ruRU" ) then
   
   DCR_MUTAT_INJ       = "Лечить \"Мутагенный укол\"";
   DCR_WYV_STING    = "Отменять \"Укус виверны\"";
+  DCR_RANGE_CHECK    = "localize me: Fade de curse buttons based on range";
   
   DCR_AMOUNT_AFFLIC   = "Количество отображаемых заражений : ";
   DCR_BLACK_LENGTH    = "Секунд в чёрном списке : ";
