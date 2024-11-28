@@ -286,6 +286,7 @@
 		this:StopMovingOrSizing();
 		-- DecursiveAfflictedListFrame:StopMovingOrSizing();
 		this.isMoving = false;
+		Dcr_Saved.MainBar_Position = {this:GetCenter()}
 		end
 	    </OnMouseUp>
 	    <OnMouseDown>

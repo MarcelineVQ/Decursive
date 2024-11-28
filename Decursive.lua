@@ -50,6 +50,7 @@ local has_superwow = SetAutoloot and true or false
 -------------------------------------------------------------------------------
 Dcr_Saved = {
   -- this is the items that are stored...
+  MainBar_Position = { };
 
   Dcr_Print_DEBUG_bis = false;
 
@@ -1673,6 +1674,8 @@ function Dcr_OnEvent (event) --{{{
   end
 
   if (event == "PLAYER_ENTERING_WORLD") then
+    DecursiveMainBar:ClearAllPoints()
+    DecursiveMainBar:SetPoint("CENTER", UIParent, "BOTTOMLEFT", unpack(Dcr_Saved.MainBar_Position or {DecursiveMainBar:GetCenter()}))
     Dcr_Groups_datas_are_invalid = true;
     Frame:RegisterEvent("PLAYER_ENTER_COMBAT");
     Frame:RegisterEvent("PLAYER_LEAVE_COMBAT");
@@ -2405,7 +2408,8 @@ function Dcr_GetUnitDebuffAll (unit) --{{{
 end --}}}
 
 function Dcr_CheckUnitForBuff(Unit, BuffNameToCheck) --{{{
-  local i = 1, texture, found_buff_name;
+  local i = 1;
+  local texture, found_buff_name;
 
   while (true) do
     texture = UnitBuff (Unit, i);
