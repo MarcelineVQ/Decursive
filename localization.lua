@@ -223,11 +223,10 @@ DCR_SKIP_LIST = {
   ["Mol'dar's Moxie"] = true,
   ["Fengus' Ferocity"] = true,
   ["Slip'kik's Savvy"] = true,
-  ["Songflower Serenade"] = true,
   ["Wyvern Sting"] = true,
   ["Thunderfury"] = true,
   --["Sanctum Mind Decay"] = true,
-  ["Dreamstate"] = true,
+  --["Dreamstate"] = true,
   ["Call of Nightmare"] = true,
   ["Poison Mushroom"] = true,
 };
