@@ -184,9 +184,12 @@ if ( GetLocale() == "ruRU" ) then
     ["Дерзость Мол'дара"] = true,
     ["Свирепость Фенгуса"] = true,
     ["Смекалка Слип'кика"] = true,
-    ["Серенада песнецвета"] = true,
     ["Укус виверны"] = true,
     ["Неистовство бури"] = true,
+    --["Sanctum Mind Decay"] = true,
+    --["Dreamstate"] = true,
+    ["Call of Nightmare"] = true,
+    ["Ядовитый гриб"] = true,
   };
   
   -- ignore the effect bassed on the class
