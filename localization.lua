@@ -239,6 +239,7 @@ DCR_SKIP_BY_CLASS_LIST = {
     ["Ancient Hysteria"]   = true,
     ["Ignite Mana"]        = true,
     ["Tainted Mind"]       = true,
+    ["Curse of Manascale"] = true,
   };
   [DCR_CLASS_ROGUE] = {
     ["Silence"]            = true;
@@ -247,5 +248,6 @@ DCR_SKIP_BY_CLASS_LIST = {
     ["Tainted Mind"]       = true,
     ["Smoke Bomb"]         = true,
     ["Screams of the Past"] = true,
+    ["Curse of Manascale"] = true,
   };
 };
