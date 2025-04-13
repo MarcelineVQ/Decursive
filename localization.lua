@@ -230,6 +230,7 @@ DCR_SKIP_LIST = {
   ["Call of Nightmare"] = true,
   ["Poison Mushroom"] = true,
   ["Icicles"] = true,
+  ["Unstable Mana"] = true,
 };
 
 -- ignore the effect bassed on the class
