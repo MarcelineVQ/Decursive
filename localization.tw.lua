@@ -164,6 +164,10 @@ if ( GetLocale() == "zhTW" ) then
     ["影遁"]  = true,
   }
 
+  -- spells you _don't_ want to dispell
+  DCR_AVOID_LIST = {
+  }
+
   -- this causes the target to be ignored!!!!
   DCR_IGNORELIST  = {
     ["放逐術"]  = true,

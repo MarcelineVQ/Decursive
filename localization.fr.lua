@@ -165,6 +165,10 @@ if ( GetLocale() == "frFR" ) then
     ["Changement de phase"]    = true,
   };
 
+  -- spells you _don't_ want to dispell
+  DCR_AVOID_LIST = {
+  }
+
   DCR_SKIP_LIST = {
     ["Sommeil sans rêve"]    = true,
     ["Sommeil sans rêve supérieur"] = true,

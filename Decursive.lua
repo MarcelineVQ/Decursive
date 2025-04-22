@@ -1,5 +1,5 @@
 --[[
- Decursive (v 1.9.8.3) add-on for World of Warcraft UI
+ Decursive (v 1.9.9) add-on for World of Warcraft UI
  Copyright (C) 2006 Archarodim ( http://www.2072productions.com/?to=decursive-continued.txt )
  This is the continued work of the original Decursive (v1.9.4) by Quu
  Decursive 1.9.4 is in public domain ( www.quutar.com )
@@ -986,18 +986,24 @@ function Dcr_ScanUnit( Unit, Index) --{{{
 
   AllUnitDebuffs = Dcr_GetUnitDebuffAll(Unit);
 
+  -- avoids should skip all of that type, or you can accidently remove it anyway
+  local skip_types = {}
   for debuff_name, debuff_params in AllUnitDebuffs do
-    -- test if we have to ignore this debuf  {{{ --
+    -- if target should not be considered at all, phased imp, banish, etc
     if (DCR_IGNORELIST[debuff_name]) then
-      -- these are the BAD ones... the ones that make the target immune... abort the user
       -- Dcr_debug( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
       return false;
     end
+    if DCR_AVOID_LIST[debuff_name] then
+      skip_types[debuff_params.debuff_type] = true
+    end
+  end
 
-    if (DCR_SKIP_LIST[debuff_name]) then
-      -- these are just ones you don't care about
-      -- Dcr_debug( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
-      break;
+  for debuff_name, debuff_params in AllUnitDebuffs do
+    local skip_debuff = false
+
+    if skip_types[debuff_params.debuff_type] or DCR_SKIP_LIST[debuff_name] then
+      skip_debuff = true
     end
 
     if (UnitAffectingCombat("player")) then
@@ -1005,13 +1011,12 @@ function Dcr_ScanUnit( Unit, Index) --{{{
         if (DCR_SKIP_BY_CLASS_LIST[UClass][debuff_name]) then
           -- these are just ones you don't care about by class
           -- Dcr_debug( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
-          break;
+          skip_debuff = true
         end
       end
     end
-    -- }}}
 
-    if (debuff_params.debuff_type and debuff_params.debuff_type ~= "") then -- debuff_type can be an empty string
+    if not skip_debuff and (debuff_params.debuff_type and debuff_params.debuff_type ~= "") then -- debuff_type can be an empty string
       -- // {{{ --
       if (debuff_params.debuff_type == DCR_MAGIC and Dcr_Saved.CureMagic) then
         if (UnitIsCharmed(Unit)) then
@@ -2339,12 +2344,12 @@ function Dcr_GetUnitBuff (Unit, i) --{{{
 end --}}}
 
 function Dcr_GetUnitDebuff  (Unit, i) --{{{
-  local DebuffTexture, debuffApplications, debuff_type;
+  local DebuffTexture, debuffApplications, debuff_type,spell_id
 
-  DebuffTexture, debuffApplications, debuff_type = UnitDebuff(Unit, i);
+  DebuffTexture, debuffApplications, debuff_type, spell_id = UnitDebuff(Unit, i);
 
   if (DebuffTexture) then
-    debuff_name = Dcr_GetUnitDebuffName(Unit, i, DebuffTexture);
+    debuff_name = (has_superwow and spell_id and SpellInfo(spell_id)) or Dcr_GetUnitDebuffName(Unit, i, DebuffTexture);
     return debuff_name, debuff_type, debuffApplications, DebuffTexture;
   else
     return false, false, false, false;
@@ -2488,6 +2493,7 @@ function Dcr_CureUnit(Unit)  --{{{
   AllUnitDebuffs = Dcr_GetUnitDebuffAll(Unit);
 
   local Go_On;
+  local skip_types = {}
 
   for debuff_name, debuff_params in AllUnitDebuffs do
     -- the "break" was not working all that well, so we stor a go on variable
@@ -2502,10 +2508,10 @@ function Dcr_CureUnit(Unit)  --{{{
       return false;
     end
 
-
     -- Ignore debuffs that are in fact buffs
-    if (DCR_SKIP_LIST[debuff_name]) then
+    if DCR_AVOID_LIST[debuff_name] then
       Dcr_errln( string.gsub( string.gsub(DCR_IGNORE_STRING, "$t", (UnitName(Unit))), "$a", debuff_name));
+      skip_types[debuff_params.debuff_type] = true
       Go_On = false; -- == continue
     end
 
@@ -2553,6 +2559,17 @@ function Dcr_CureUnit(Unit)  --{{{
   counts.Poison_Count = Poison_Count;
   counts.Disease_Count = Disease_Count;
 
+  for type,_ in pairs(skip_types) do
+    if type == DCR_MAGIC then
+      counts.Magic_Count = 0
+    elseif type == DCR_DISEASE then
+      counts.Disease_Count = 0
+    elseif type == DCR_POISON then
+      counts.Poison_Count = 0
+    elseif type == DCR_CURSE then
+      counts.Curse_Count = 0
+    end
+  end
 
   local i;
   for i = 1, 4 do

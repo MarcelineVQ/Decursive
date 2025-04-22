@@ -23,7 +23,7 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.9.8.6";
+DCR_VERSION_STRING = "Decursive 1.9.9";
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -204,13 +204,24 @@ DCR_INVISIBLE_LIST = {
   ["Shadowmeld"]  = true,
 }
 
--- this causes the target to be ignored!!!!
+-- causes the target to be ignored
+-- don't use this to avoid dispelling, use DCR_AVOID_LIST
 DCR_IGNORELIST = {
   ["Banish"]      = true,
   ["Phase Shift"] = true,
 };
 
--- ignore this effect
+-- spells you _don't_ want to dispell
+-- don't use this to ignore seeing debuffs, use DCR_SKIP_LIST
+DCR_AVOID_LIST = {
+  ["Unstable Mana"] = true,
+  ["Phase Shifted"] = true,
+  ["Doom of Outland"] = true,
+  ["Dread of Outland"] = true,
+}
+
+-- ignore this effect, it can still be incidentally dispelled
+-- if you want to avoid dispelling, use DCR_AVOID_LIST
 DCR_SKIP_LIST = {
   ["Dreamless Sleep"] = true,
   ["Greater Dreamless Sleep"] = true,
@@ -230,7 +241,7 @@ DCR_SKIP_LIST = {
   ["Call of Nightmare"] = true,
   ["Poison Mushroom"] = true,
   ["Icicles"] = true,
-  ["Unstable Mana"] = true,
+  ["Vampiric Aura"] = true,
 };
 
 -- ignore the effect bassed on the class
@@ -242,12 +253,15 @@ DCR_SKIP_BY_CLASS_LIST = {
     ["Curse of Manascale"] = true,
   };
   [DCR_CLASS_ROGUE] = {
-    ["Silence"]            = true;
-    ["Ancient Hysteria"]   = true,
-    ["Ignite Mana"]        = true,
-    ["Tainted Mind"]       = true,
-    ["Smoke Bomb"]         = true,
+    ["Silence"]             = true,
+    ["Ancient Hysteria"]    = true,
+    ["Ignite Mana"]         = true,
+    ["Tainted Mind"]        = true,
+    ["Smoke Bomb"]          = true,
     ["Screams of the Past"] = true,
-    ["Curse of Manascale"] = true,
+    ["Curse of Manascale"]  = true,
+  };
+  [DCR_CLASS_WARLOCK] = {
+    ["Rift Entanglement"] = true,
   };
 };
