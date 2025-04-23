@@ -216,7 +216,7 @@ DCR_IGNORELIST = {
 DCR_AVOID_LIST = {
   ["Unstable Mana"] = true,
   ["Phase Shifted"] = true,
-  ["Doom of Outland"] = true,
+  -- ["Doom of Outland"] = true,
   ["Dread of Outland"] = true,
 }
 
