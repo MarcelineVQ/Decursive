@@ -23,7 +23,8 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.10.0";
+local ver = GetAddOnMetadata("Decursive", "Version");
+DCR_VERSION_STRING = "Decursive " .. ver;
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -213,16 +214,17 @@ DCR_IGNORELIST = {
   ["Phase Shift"] = true,
 };
 
--- spells you _don't_ want to dispell
+-- spells you _don't_ want dispelled
 -- don't use this to ignore seeing debuffs, use DCR_SKIP_LIST
 DCR_AVOID_LIST = {
   ["Unstable Mana"] = true,
   ["Phase Shifted"] = true,
   -- ["Doom of Outland"] = true,
-  ["Dread of Outland"] = true,
+  ["Dread of Outland"] = true, -- kills dispelled person
+  ["Curse of Legion"] = true, -- explodes on raid if dispelled
 }
 
--- ignore this effect, it can still be incidentally dispelled
+-- ignore seeing this effect, it can still be incidentally dispelled when dispelling another effect
 -- if you want to avoid dispelling, use DCR_AVOID_LIST
 DCR_SKIP_LIST = {
   ["Dreamless Sleep"] = true,
@@ -244,6 +246,7 @@ DCR_SKIP_LIST = {
   ["Poison Mushroom"] = true,
   ["Icicles"] = true,
   ["Vampiric Aura"] = true,
+  -- ["Mana Buildup"] = true, -- don't ignore this, explodes on raid if not dispelled
 };
 
 -- ignore the effect bassed on the class

@@ -1233,9 +1233,8 @@ StaticPopupDialogs["DCR_DISABLE_AUTOSELFCAST"] = {
   ShowAlert = 1,
 };
 
--- TODO remove this if you have superwow
 function Dcr_CheckAuSelfCastStaus ()
-  if (GetCVar("autoSelfCast") == "1") then
+  if (GetCVar("autoSelfCast") == "1" and not has_superwow) then
     StaticPopup_Show ("DCR_DISABLE_AUTOSELFCAST", AUTO_SELF_CAST_TEXT);
   end
 end
@@ -1320,16 +1319,10 @@ function Dcr_Init() --{{{
 
   SLASH_DECURSIVEVERSION1 = DCR_MACRO_VERSION;
   SlashCmdList["DECURSIVEVERSION"] = function(msg)
-    local superwow = false;
-    if SetAutoloot then
-      superwow = true;
-    end
+    local superwow = SetAutoloot and true or false
+    local msg = DCR_VERSION_STRING .. (superwow and " superwow support enabled" or "")
 
-    if superwow then
-      Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_VERSION_STRING .. " superwow support enabled", 1, 1, 1);
-    else
-      Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_VERSION_STRING, 1, 1, 1);
-    end
+    Dcr_Saved.Dcr_OutputWindow:AddMessage(msg, 1, 1, 1);
   end
   -- }}}
 
@@ -1777,9 +1770,8 @@ function Dcr_OnUpdate(arg1) --{{{
   -- wow the next command SPAMS alot
   -- Dcr_debug("got update "..arg1);
 
-  -- TODO not needed for superwow
   -- this is the fix for the AttackTarget() bug
-  if (Dcr_Delay_Timer > 0) then
+  if (Dcr_Delay_Timer > 0 and not has_superwow) then
     Dcr_Delay_Timer = Dcr_Delay_Timer - arg1;
     if (Dcr_Delay_Timer <= 0) then
       if (not Dcr_CombatMode) then
@@ -2091,8 +2083,7 @@ function Dcr_Clean(UseThisTarget, SwitchToTarget) --{{{
   -- reset autoSelfCast restor timeout while you're spamming...
   RestorSelfAutoCastTimeOut = 1;
 
-  -- TODO disable this for superwow
-  if (GetCVar("autoSelfCast") == "1") then
+  if (GetCVar("autoSelfCast") == "1" and not has_superwow) then
     RestorSelfAutoCast = true;
     Dcr_debug_bis("autoSelfCast is active... Temp disabling");
     SetCVar("autoSelfCast", "0");
@@ -2313,7 +2304,7 @@ function Dcr_Clean(UseThisTarget, SwitchToTarget) --{{{
   -----------------------------------------------------------------------
 
   -- TODO this isn't needed with superwow
-  if (not SwitchToTarget) then -- if not explicitly ask to switch to the target
+  if (not has_superwow and not SwitchToTarget) then -- if not explicitly ask to switch to the target
     if (targetEnemy) then
       -- we had somethign "bad" targeted
       if (not UnitIsEnemy("target", "player")) then
