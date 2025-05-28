@@ -1,5 +1,5 @@
 --[[
- Decursive (v 1.9.9) add-on for World of Warcraft UI
+ Decursive (v 1.10.0) add-on for World of Warcraft UI
  Copyright (C) 2006 Archarodim ( http://www.2072productions.com/?to=decursive-continued.txt )
  This is the continued work of the original Decursive (v1.9.4) by Quu
  Decursive 1.9.4 is in public domain ( www.quutar.com )
@@ -1318,6 +1318,19 @@ function Dcr_Init() --{{{
     Dcr_Toggle_debug_bis();
   end
 
+  SLASH_DECURSIVEVERSION1 = DCR_MACRO_VERSION;
+  SlashCmdList["DECURSIVEVERSION"] = function(msg)
+    local superwow = false;
+    if SetAutoloot then
+      superwow = true;
+    end
+
+    if superwow then
+      Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_VERSION_STRING .. " superwow support enabled", 1, 1, 1);
+    else
+      Dcr_Saved.Dcr_OutputWindow:AddMessage(DCR_VERSION_STRING, 1, 1, 1);
+    end
+  end
   -- }}}
 
   if (Dcr_Saved.Hide_LiveList) then
