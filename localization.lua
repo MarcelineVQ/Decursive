@@ -23,7 +23,7 @@
 -------------------------------------------------------------------------------
 -- the constants for the mod (non localized)
 -------------------------------------------------------------------------------
-DCR_VERSION_STRING = "Decursive 1.9.9";
+DCR_VERSION_STRING = "Decursive 1.10.0";
 BINDING_HEADER_DECURSIVE = "Decursive";
 
 DCR_MACRO_COMMAND  = "/decursive";
@@ -42,6 +42,8 @@ DCR_MACRO_SKCLEAR  = "/dcrskclear";
 DCR_MACRO_SKLIST   = "/dcrsklist";
 DCR_MACRO_SKSHOW   = "/dcrskshow";
 DCR_MACRO_DEBUG     = "/dcrdebug";
+
+DCR_MACRO_VERSION    = "/dcrversion";
 
 -- DO NOT TRANSLATE, THOSE ARE ALWAYS ENGLISH
 DCR_CLASS_DRUID   = 'DRUID';
